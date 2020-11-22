@@ -9,7 +9,7 @@
 #
 # Supported platforms (built and tested):
 #
-#   Windows 2000/XP/2003/Vista (x86/amd64)
+#   Windows (x86/amd64/aarch64)
 #   Windows CE/Mobile (arm)
 #   Darwin/OS X (i386/x86_64/ppc)
 #   Linux (i386/amd64/ppc/arm)
@@ -232,6 +232,12 @@ WINDRES=$(MINGW_PREFIX)windres
 MINGW=$(MINGW_PREFIX)gcc
 
 ifeq ($(USE_MSVC),true)
+ifeq ($(ARCH),aarch64)
+# Force $(CC) fallback; avoid arch mismatch
+WINDRES=false
+# Disable mingw; no aarch64 support
+MINGW=
+endif
 # MS compiler
 CC=$(FFI_SRC)/msvcc.sh
 CDEFINES+=-DHAVE_PROTECTION 
@@ -246,8 +252,15 @@ LIBS=psapi.lib
 ARSFX=.lib
 ifeq ($(ARCH),amd64)
 CC+= -m64
+FFI_TARGET=$(FFI_SRC)/src/x86/ffitarget.h
+else ifeq ($(ARCH),aarch64)
+CC+= -marm64
+FFI_CONFIG+=--host=aarch64-cygwin
+# Disable ASMFN for aarch64, don't bulid dll-callback.o
+DLLCB=$(BUILD)/callback.o
 endif
-FFI_CONFIG+= && rm -f include/ffitarget.h && cp $(FFI_SRC)/include/*.h $(FFI_SRC)/src/x86/ffitarget.h include
+FFI_TARGET?=$(FFI_SRC)/src/$(ARCH)/ffitarget.h
+FFI_CONFIG+= && rm -f include/ffitarget.h && cp $(FFI_SRC)/include/*.h $(FFI_TARGET) include
 FFI_ENV+=LD="$(LD)" CPP="$(CPP)" CXXCPP="$(CPP)"
 EXTRAOBJS+=$(DLLCB)
 
@@ -452,6 +465,10 @@ install:
 ifeq ($(ARCH), amd64)
 $(DLLCB): dll-callback.c 
 	$(MINGW) -DDEFINE_CALLBACKS -c $< $(COUT)
+else ifeq ($(ARCH), aarch64)
+# Build without ASMFN support
+$(DLLCB): callback.c
+	$(CC) -DDEFINE_CALLBACKS -DASMFN_OFF $(CINCLUDES) $(CDEFINES) -c $< $(COUT)
 endif
 
 $(RSRC): $(BUILD)/jnidispatch.rc $(BUILD)/$(JNA_JNI_VERSION).stamp

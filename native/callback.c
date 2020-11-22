@@ -51,7 +51,7 @@
 extern "C" {
 #endif
 
-#if defined(_WIN32) && !defined(_WIN32_WCE)
+#if defined(_WIN32) && !defined(_WIN32_WCE) && !defined(ASMFN_OFF)
 #include "com_sun_jna_win32_DLLCallback.h"
 #ifdef _WIN64
 #ifdef _MSC_VER
