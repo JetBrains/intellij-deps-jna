@@ -4,14 +4,14 @@
   http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>net.java.dev.jna</groupId>
+  <groupId>org.jetbrains.intellij.deps.jna</groupId>
   <artifactId>jna-platform</artifactId>
   <version>TEMPLATE</version>
   <packaging>jar</packaging>
 
   <name>Java Native Access Platform</name>
   <description>Java Native Access Platform</description>
-  <url>https://github.com/java-native-access/jna</url>
+  <url>https://github.com/JetBrains/intellij-deps-jna</url>
 
   <licenses>
       <license>
@@ -27,9 +27,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/java-native-access/jna</connection>
-    <developerConnection>scm:git:ssh://git@github.com/java-native-access/jna.git</developerConnection>
-    <url>https://github.com/java-native-access/jna</url>
+    <connection>scm:git:https://github.com/JetBrains/intellij-deps-jna</connection>
+    <developerConnection>scm:git:ssh://git@github.com/JetBrains/intellij-deps-jna.git</developerConnection>
+    <url>https://github.com/JetBrains/intellij-deps-jna</url>
   </scm>
 
   <developers>
@@ -52,9 +52,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>net.java.dev.jna</groupId>
+      <groupId>org.jetbrains.intellij.deps.jna</groupId>
       <artifactId>jna</artifactId>
-      <version>5.5.1-SNAPSHOT</version>
+      <version>${version}</version>
     </dependency>
   </dependencies>
 
