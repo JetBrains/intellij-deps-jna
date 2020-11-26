@@ -132,12 +132,12 @@
   <property name="groupId" value="net.java.dev.jna" />
   <property name="artifactId" value="jna" />
 
-  <property name="maven-javadoc-jar" value="${dist}/${artifactId}-${jna.version}-javadoc.jar" />
-  <property name="maven-sources-jar" value="${dist}/${artifactId}-${jna.version}-sources.jar" />
+  <property name="maven-javadoc-jar" value="${dist}/${artifactId}-javadoc.jar" />
+  <property name="maven-sources-jar" value="${dist}/${artifactId}-sources.jar" />
 
   <property name="platform-jar" value="${dist}/jna-platform.jar"/>
-  <property name="platform-javadoc-jar" value="${dist}/platform-${jna.version}-javadoc.jar" />
-  <property name="platform-sources-jar" value="${dist}/platform-${jna.version}-sources.jar" />
+  <property name="platform-javadoc-jar" value="${dist}/platform-javadoc.jar" />
+  <property name="platform-sources-jar" value="${dist}/platform-sources.jar" />
   <property name="platform-jpms-jar" value="${dist}/jna-platform-jpms.jar" />
 
   <!-- defined maven snapshots and staging repository id and url -->
