@@ -1076,8 +1076,7 @@ cd ..
     </zip>
   </target>
 
-  <target name="native" depends="-enable-native,javah,-native-api-check,-prepare-native" unless="-native"
-          description="Build native libraries.  Use 'ant -DCC=xxx' to build using a compiler other than gcc">
+  <target name=":native-binaries" depends="-enable-native,javah,-native-api-check,-prepare-native" unless="-native">
     <exec executable="${make}" dir="${native}" failonerror="true">
       <arg value="JAVA_HOME=${jdk.home}"/>
       <arg value="JAVAH=${build.headers}"/>
@@ -1095,7 +1094,10 @@ cd ..
       <arg value="JNA_JNI_VERSION=${jni.version}"/>
       <arg value="CHECKSUM=${jni.md5}"/>
     </exec>
+  </target>
 
+  <target name="native" depends=":native-binaries" unless="-native"
+          description="Build native libraries.  Use 'ant -DCC=xxx' to build using a compiler other than gcc">
     <!-- For web start, native libraries may be provided in the root of -->
     <!-- an included jar file -->
     <jar jarfile="${build}/${native.jar}" createUnicodeExtraFields="never" encoding="UTF-8">
